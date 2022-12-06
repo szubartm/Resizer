@@ -1,8 +1,3 @@
-﻿
-using Resizer;
-
-
-
+﻿using Resizer;
 
 ImgResizer.ResizeImagesFromDirectory();
-

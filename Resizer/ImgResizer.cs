@@ -42,15 +42,24 @@ namespace Resizer
 
 
                 int i = 0;
-                var descRect = new Rectangle(0, 0, width, height);
-                var output = new Bitmap(width, height);
+                var descRect = new Rectangle(0, 0, 0, 0);
+                var output = new Bitmap(100, 100);
 
                 foreach (var img in images)
                 {
-                    if (img.Width > img.Height)
+                    if (img.Width < img.Height)
                     {
-                        descRect = new Rectangle(0, 0, height, width);
+                        descRect.Width = height;
+                        descRect.Height = width;
                         output = new Bitmap(height, width);
+                        Console.WriteLine("Detected horizontal image.");
+                        Console.WriteLine($"Converting to {height}x{width}.");
+                    }
+                    else
+                    {
+                        descRect = new Rectangle(0, 0, width, height);
+                        output = new Bitmap(width, height);
+                        Console.WriteLine($"Converting to {width}x{height}.");
                     }
 
 
@@ -73,7 +82,7 @@ namespace Resizer
                     }
 
                     img.Dispose();
-                    Console.WriteLine($"Converting to {width}x{height}.");
+                    
                     output.Save($@"{docPath}\ConvertedImages\converted_img{i}{extension}");
                     i++;
 

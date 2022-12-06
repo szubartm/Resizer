@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
@@ -39,13 +40,20 @@ namespace Resizer
                 int width = Parser.ParseToInt(widthString);
                 int height = Parser.ParseToInt(heightString);
 
+
+                int i = 0;
                 var descRect = new Rectangle(0, 0, width, height);
                 var output = new Bitmap(width, height);
-                int i = 0;
-
 
                 foreach (var img in images)
                 {
+                    if (img.Width > img.Height)
+                    {
+                        descRect = new Rectangle(0, 0, height, width);
+                        output = new Bitmap(height, width);
+                    }
+
+
 
                     output.SetResolution(img.HorizontalResolution, img.VerticalResolution);
 
@@ -71,10 +79,12 @@ namespace Resizer
 
                     Console.WriteLine($@"Saving to {docPath}\ConvertedImages\converted_img{i}{extension}");
                 }
+                Console.WriteLine("All files converted. Press any key to exit");
+                Process.Start("explorer.exe", $@"/open, {docPath}\ConvertedImages\");
             }
             else
             {
-                Console.WriteLine($"No files with extension {extension} was found in directory.");
+                Console.WriteLine($"No files with extension {extension} was found in directory. Press any key to exit");
             }
 
         }

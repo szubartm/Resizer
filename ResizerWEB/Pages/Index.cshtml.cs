@@ -23,6 +23,11 @@ namespace ResizerWEB.Pages
         public void OnGet()
         {
             Directory.CreateDirectory("wwwroot\\converted");
+            string[] filepaths = Directory.GetFiles("wwwroot\\converted\\");
+            foreach(var file in filepaths)
+            {
+                System.IO.File.Delete(file);
+            }
         }
 
         public FileResult OnPost(List<IFormFile> images, string widthString, string heightString)

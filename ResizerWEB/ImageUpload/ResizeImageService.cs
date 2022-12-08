@@ -18,13 +18,13 @@ namespace ResizerWEB.ImageUpload
             var height = Parser.ParseToInt(heightString);
             var descRect = new Rectangle(0, 0, 0, 0);
             var output = new Bitmap(100, 100);
-            int i = 0;
-            string extension = ".jpg";
+           
+            
             foreach (var image in images)
             {
 
                 var type = image.ContentType;
-
+                var extension = image.FileName;
 
                 using (var memoryStream = new MemoryStream())
                 {
@@ -70,8 +70,8 @@ namespace ResizerWEB.ImageUpload
                         
                         img.Dispose();
 
-                        output.Save($"wwwroot\\converted\\converted{i}.png");
-                        i++;
+                        output.Save($"wwwroot\\converted\\converted_{image.FileName}");
+                        
                     }
                 }
             }
